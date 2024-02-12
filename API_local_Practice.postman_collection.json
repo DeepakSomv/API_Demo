@@ -1,0 +1,1855 @@
+{
+	"info": {
+		"_postman_id": "af9bb1d2-a0b7-48c6-a9de-ed3ca7ab2fee",
+		"name": "API_local_Practice",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14396451",
+		"_collection_link": "https://lively-meadow-525775.postman.co/workspace/APIClassB7~35d70d3a-ea23-4f2e-a59c-0390a88158f6/collection/14396451-af9bb1d2-a0b7-48c6-a9de-ed3ca7ab2fee?action=share&source=collection_link&creator=14396451"
+	},
+	"item": [
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Create Employee & Verify",
+					"item": [
+						{
+							"name": "CreateEmployeeByPassingAllTheProPerties",
+							"item": [
+								{
+									"name": "CreateEMployee",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//APITest-1000(To create the employee data)\r",
+													"//To convert the JSON Object into JavaScript\r",
+													"var resBody = JSON.parse(responseBody);\r",
+													"// Convert the Request body into JavaScript\r",
+													"var reqBody = JSON.parse(request.data);\r",
+													"\r",
+													"\r",
+													"//Condition\r",
+													"if (responseCode.code == 201)//true\r",
+													"{\r",
+													"    console.log(\"Post-Request  i.e TEST\");\r",
+													"\r",
+													"    //Fetch the ObjectID and Store inside the Environment\r",
+													"    //pm.environment.set(\"Variable Name\",\"Value\");\r",
+													"    pm.environment.set(\"setTheEmployeeID\", resBody.id);\r",
+													"    //Set the Employee Request Body into the Env\r",
+													"     pm.environment.set(\"setEmployeeFirstName\",reqBody.FirstName);\r",
+													"    //  pm.environment.set(\"setEmployeeLastName\",reqBody.LastName);\r",
+													"     pm.environment.set(\"setEmployeeEmailId\",reqBody.Email);\r",
+													"    //Set the Whole employee Object\r",
+													"    pm.environment.set(\"setEmployeeObject\", reqBody);\r",
+													"\r",
+													"    // Execute the code/ logic\r",
+													"    tests[\"Employee data get created succesfully and status code get matched and Status code is: \" + responseCode.code] = responseCode.code == 201;\r",
+													"    tests[\"Verify the Employee FirstName and firstName is: \" + resBody.FirstName] = resBody.FirstName == reqBody.FirstName;//Assertation\r",
+													"    tests[\"Verify the Employee LastName and LastName is: \" + resBody.LastName] = resBody.LastName == reqBody.LastName;\r",
+													"    tests[\"Verify the Employee EmailID and EmailId is: \" + resBody.Email] = resBody.Email == reqBody.Email;\r",
+													"    tests[\"Verify the employee DateOfBirth and DOB is: \" + resBody.DateOfBirth] = resBody.DateOfBirth == reqBody.DateOfBirth;\r",
+													"    tests[\"Verify the Employee Nationality and Nationality is: \" + resBody.Nationality] = resBody.Nationality == reqBody.Nationality;\r",
+													"    tests[\"Verify the Employee Address.City and City is: \" + resBody.Address.City] = resBody.Address.City == reqBody.Address.City;\r",
+													"    tests[\"Verify the Employee Address.PostalCode and PostalCode is: \" + resBody.Address.PostalCode] = resBody.Address.PostalCode == reqBody.Address.PostalCode;\r",
+													"    tests[\"Verify the Employee PhoneNumber and PhoneNumber is : \" + resBody.PhoneNumber] = resBody.PhoneNumber == reqBody.PhoneNumber;\r",
+													"}\r",
+													"else {\r",
+													"    tests[\"Employee data not get created succesfully and status code not get matched and Status code is: \" + responseCode.code + \" instaed of : 201\"] = responseCode.code == 201;\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"console.log(\"Pre-Request\");\r",
+													"\r",
+													"var randomNum = Math.floor(Math.random() * 1000);\r",
+													"pm.environment.set(\"setTheRandomNum\",randomNum);\r",
+													"var empFirstName = \"Mohan\" + randomNum;\r",
+													"\r",
+													"//Set the EMployee unique FirstName\r",
+													"pm.environment.set(\"setUniEmpFirstName\", empFirstName);\r",
+													"\r",
+													"var empEmailId = empFirstName + \"@gmail.com\";\r",
+													"//set the Employee unique EmailID\r",
+													"pm.environment.set(\"setUniEmpEmail\", empEmailId);\r",
+													"var mobNum = \"7887878\";\r",
+													"//Set the MobNum\r",
+													"pm.environment.set(\"setMobNum\",mobNum+randomNum);\r",
+													"\r",
+													"//Generate the Unique String Value\r",
+													"function randomString(length) {\r",
+													"    var result = '';\r",
+													"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgwxyzsdsdsdsdsdsdsdrrererer';\r",
+													"    var charactersLength = characters.length;\r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        result += characters.charAt(Math.floor(Math.random()*charactersLength));\r",
+													"    }\r",
+													"    return result;\r",
+													"}\r",
+													"\r",
+													"var generateRandomString = \"Jo\"+randomString(5);\r",
+													"console.log(generateRandomString);\r",
+													"\r",
+													"pm.environment.set(\"setRandomString\",generateRandomString);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "noauth"
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "applications/json",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "",
+												"value": "",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"{{setUniEmpFirstName}}\",\r\n    \"LastName\": \"{{$randomLastName}}\",\r\n    \"Prefix\": \"{{$randomNamePrefix}}\",\r\n    \"BirthSurName\": \"{{setRandomString}}\",\r\n    \"Email\": \"{{setUniEmpEmail}}\",\r\n    \"Smoker\": {{$randomBoolean}},\r\n    \"Smokedate\": null,\r\n    \"DateOfBirth\": \"1998-03-15\",\r\n    \"Type\": \"Client\",\r\n    \"Nationality\": \"UK\",\r\n     \"Address\": {\r\n        \"Street\": \"{{setRandomString}}\",\r\n        \"HouseNumber\": \"{{setTheRandomNum}}\",\r\n        \"PostalCode\": \"{{$randomInt}}\",\r\n        \"City\": \"{{$randomCity}}\",\r\n        \"Country\": \"IND\"\r\n    },\r\n \r\n    \"PhoneNumber\": {{setMobNum}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000//Employees",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"",
+												"Employees"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetEmployeeUsingID",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"\r",
+													"//APITest-1001(To Verify the Created data using the Get Method)\r",
+													"//To convert the JSON Object into JavaScript\r",
+													"var resBody = JSON.parse(responseBody);\r",
+													"\r",
+													"//Condition\r",
+													"if (responseCode.code == 200)//true\r",
+													"{\r",
+													"    //Get Method\r",
+													"    //Get the EMployee FirstName,LastName, and EMail\r",
+													"    //   var getEmployeeFirstName = pm.environment.get(\"setEmployeeFirstName\");\r",
+													"    //   var getEmployeeLastName =pm.environment.get(\"setEmployeeLastName\");\r",
+													"    //   var getEmployeeEmailId =pm.environment.get(\"setEmployeeEmailId\");\r",
+													"\r",
+													"    //Get the Expected Employee Data\r",
+													"    var getEmployeeObject = pm.environment.get(\"setEmployeeObject\");\r",
+													"    console.log(getEmployeeObject);\r",
+													"    // Execute the code/ logic\r",
+													"    tests[\"Employee data get fetched succesfully and status code get matched and Status code is: \" + responseCode.code] = responseCode.code == 200;\r",
+													"    tests[\"Verify the Employee FirstName and firstName is: \" + resBody.FirstName] = resBody.FirstName == getEmployeeObject.FirstName;//Assertation\r",
+													"    tests[\"Verify the Employee LastName and LastName is: \" + resBody.LastName] = resBody.LastName == getEmployeeObject.LastName;\r",
+													"    tests[\"Verify the Employee EmailID and EmailId is: \" + resBody.Email] = resBody.Email == getEmployeeObject.Email;\r",
+													"    tests[\"Verify the employee DateOfBirth and DOB is: \" + resBody.DateOfBirth] = resBody.DateOfBirth == getEmployeeObject.DateOfBirth;\r",
+													"    tests[\"Verify the Employee Nationality and Nationality is: \" + resBody.Nationality] = resBody.Nationality == getEmployeeObject.Nationality;\r",
+													"    tests[\"Verify the Employee Address.City and City is: \" + resBody.Address.City] = resBody.Address.City == getEmployeeObject.Address.City;\r",
+													"    tests[\"Verify the Employee Address.PostalCode and PostalCode is: \" + resBody.Address.PostalCode] = resBody.Address.PostalCode == getEmployeeObject.Address.PostalCode;\r",
+													"    tests[\"Verify the Employee PhoneNumber and PhoneNumber is : \" + resBody.PhoneNumber] = resBody.PhoneNumber == getEmployeeObject.PhoneNumber;\r",
+													"}\r",
+													"else {\r",
+													"    tests[\"Employee data not get fetched succesfully and status code not get matched and Status code is: \" + responseCode.code] = responseCode.code == 200;\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"{{setTheEmployeeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllEmpData",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//APITest-1001(To Verify the Created data using the Get Method)\r",
+													"// Convert the Json Object into JavaScript\r",
+													"\r",
+													"var resBody = JSON.parse(responseBody);\r",
+													"//Get the EMployee ID\r",
+													"var getTheEmployeeID = pm.environment.get(\"setTheEmployeeID\");\r",
+													"//Get the WHole EMployee Object which is created\r",
+													"var getEmployeeObject = pm.environment.get(\"setEmployeeObject\");\r",
+													"\r",
+													"if(responseCode.code == 200)//false\r",
+													"{\r",
+													"for (var i = 0; i < resBody.length; i++) {\r",
+													"    if (resBody[i].id == getTheEmployeeID) {\r",
+													"\r",
+													"        tests[\"Created EMployee is displayed in GetALL request and Employee id get matched\"] = resBody[i].id == getTheEmployeeID;\r",
+													"        tests[\"Verify the Employee FirstName and FirstName name is: \"+resBody[i].FirstName] = resBody[i].FirstName == getEmployeeObject.FirstName;\r",
+													"         tests[\"Verify the Employee LastName and LastName name is:\"+resBody[i].LastName] = resBody[i].LastName == getEmployeeObject.LastName;\r",
+													"         tests[\"Verify the EMployee EMailID and EmailID is:\"+resBody[i].Email]=resBody[i].Email =  getEmployeeObject.Email;\r",
+													"         tests[\"Verify the EMployee DateOfBirth and DateOfBirth is:\"+resBody[i].DateOfBirth]=resBody[i].DateOfBirth =  getEmployeeObject.DateOfBirth;\r",
+													"         tests[\"Verify the EMployee Nationality and Nationality is:\"+resBody[i].Nationality]=resBody[i].Nationality =  getEmployeeObject.Nationality;\r",
+													"         tests[\"Verify the EMployee PhoneNumber and PhoneNumber is:\"+resBody[i].PhoneNumber]=resBody[i].PhoneNumber =  getEmployeeObject.PhoneNumber;\r",
+													"        //  tests[\"Verify the EMployee Address.PostalCode and PostalCode is:\"+resBody[i].Address.PostalCode]=resBody[i].Address.PostalCode =  getEmployeeObject.Address.PostalCode;\r",
+													"        //  tests[\"Verify the EMployee Address.City and City is:\"+resBody[i].Address.City]=resBody[i].Address.City =  getEmployeeObject.Address.City;\r",
+													"\r",
+													"         break;\r",
+													"\r",
+													"    }\r",
+													"}\r",
+													"}\r",
+													"else{\r",
+													"   tests[\"Employee data not get fetched succesfully and status code not get matched and Status code is: \" + responseCode.code] = responseCode.code == 200;\r",
+													"}\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employees",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetEmpDataUsingQueryParam",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//APITest-1001(To Verify the Created data using the Get Method)\r",
+													"// Convert the Json Object into JavaScript\r",
+													"\r",
+													"var resBody = JSON.parse(responseBody);\r",
+													"//Get the EMployee ID\r",
+													"var getTheEmployeeID = pm.environment.get(\"setTheEmployeeID\");\r",
+													"//Get the WHole EMployee Object which is created\r",
+													"var getEmployeeObject = pm.environment.get(\"setEmployeeObject\");\r",
+													"\r",
+													"if(responseCode.code == 200)//false\r",
+													"{\r",
+													"for (var i = 0; i < resBody.length; i++) {\r",
+													"    if (resBody[i].id == getTheEmployeeID) {\r",
+													"\r",
+													"        tests[\"Created EMployee is displayed in GetALL request and Employee id get matched\"] = resBody[i].id == getTheEmployeeID;\r",
+													"        tests[\"Verify the Employee FirstName and FirstName name is: \"+resBody[i].FirstName] = resBody[i].FirstName == getEmployeeObject.FirstName;\r",
+													"         tests[\"Verify the Employee LastName and LastName name is:\"+resBody[i].LastName] = resBody[i].LastName == getEmployeeObject.LastName;\r",
+													"         tests[\"Verify the EMployee EMailID and EmailID is:\"+resBody[i].Email]=resBody[i].Email =  getEmployeeObject.Email;\r",
+													"         tests[\"Verify the EMployee DateOfBirth and DateOfBirth is:\"+resBody[i].DateOfBirth]=resBody[i].DateOfBirth =  getEmployeeObject.DateOfBirth;\r",
+													"         tests[\"Verify the EMployee Nationality and Nationality is:\"+resBody[i].Nationality]=resBody[i].Nationality =  getEmployeeObject.Nationality;\r",
+													"         tests[\"Verify the EMployee PhoneNumber and PhoneNumber is:\"+resBody[i].PhoneNumber]=resBody[i].PhoneNumber =  getEmployeeObject.PhoneNumber;\r",
+													"         tests[\"Verify the EMployee Address.PostalCode and PostalCode is:\"+resBody[i].Address.PostalCode]=resBody[i].Address.PostalCode =  getEmployeeObject.Address.PostalCode;\r",
+													"         tests[\"Verify the EMployee Address.City and City is:\"+resBody[i].Address.City]=resBody[i].Address.City =  getEmployeeObject.Address.City;\r",
+													"\r",
+													"         break;\r",
+													"\r",
+													"    }\r",
+													"}\r",
+													"}\r",
+													"else{\r",
+													"   tests[\"Employee data not get fetched succesfully and status code not get matched and Status code is: \" + responseCode.code] = responseCode.code == 200;\r",
+													"}\r",
+													"\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "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",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employees?FirstName={{setEmployeeFirstName}}&Email={{setEmployeeEmailId}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees"
+											],
+											"query": [
+												{
+													"key": "FirstName",
+													"value": "{{setEmployeeFirstName}}"
+												},
+												{
+													"key": "Email",
+													"value": "{{setEmployeeEmailId}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "CreateEmpUsingMandatoryPro",
+							"item": [
+								{
+									"name": "CreateEmpUsingMadatoryProp",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"{{setUniEmpFirstName}}\",\r\n    \"Email\": \"{{setUniEmpEmail}}\"\r\n   \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"//APITest-1000(To create the employee data)",
+									"//APITest-1001(To Verify the Created data using the Get Method)"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "UpdateEmpDataUsingPatch",
+					"item": [
+						{
+							"name": "UpdateMultipleEmpProperties",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//APITEST-1002(Update[Patch] the Employee data and verify the same)\r",
+											"// Convert the Json Object into JavaScript\r",
+											"var resBody = JSON.parse(responseBody);\r",
+											"\r",
+											"//Convert the Request Body into JavaScript\r",
+											"var reqBody = JSON.parse(request.data);\r",
+											"\r",
+											"//Verify the status code\r",
+											"if (responseCode.code == 200)//True//False\r",
+											"{\r",
+											"    //Set The Expected Emp data\r",
+											"    pm.environment.set(\"setTheUpdatedEmpData\",reqBody);\r",
+											"\r",
+											"    tests[\"EMp data get updated successfully and status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"    tests[\"Verify the Updated Employee FirstName and FirstName is: \" + resBody.FirstName] = resBody.FirstName == reqBody.FirstName;\r",
+											"    tests[\"Verify the Updated Employee LastName and LastName is: \" + resBody.LastName] = resBody.LastName == reqBody.LastName;\r",
+											"    tests[\"Verify the Updated Employee PhoneNum and PhoneNum is: \" + resBody.PhoneNumber] = resBody.PhoneNumber == reqBody.PhoneNumber;\r",
+											"\r",
+											"}\r",
+											"else {\r",
+											"    tests[\"EMp data not get updated successfully and status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"ManishUpdate12345\",\r\n    \"LastName\": \"UpdatedLastName\",\r\n    \"PhoneNumber\": 999999999\r\n    \r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VerifyTheUpdateEmpData Copy 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//Conver the Response Body into JavaScript\r",
+											"var resBody = JSON.parse(responseBody);\r",
+											"\r",
+											"if(responseCode.code == 200)\r",
+											"{\r",
+											"    //Get the Updated Employee data\r",
+											"    var getTheUpdatedEmpData =pm.environment.get(\"setTheUpdatedEmpData\");\r",
+											"    console.log(getTheUpdatedEmpData);\r",
+											"    tests[\"Updated EMp data get verified In Get Call  and Status code is:\"+responseCode.code]=responseCode.code == 200;\r",
+											"     tests[\"Verify the Updated Emp FirstName\"] = resBody.FirstName ==getTheUpdatedEmpData.FirstName;\r",
+											"     tests[\"Verify the Updated Emp LastName\"] = resBody.LastName ==getTheUpdatedEmpData.LastName;\r",
+											"     tests[\"Verify the Updated Emp PhoneNumber\"] = resBody.PhoneNumber ==getTheUpdatedEmpData.PhoneNumber;\r",
+											"\r",
+											"}\r",
+											"else{\r",
+											" tests[\"EMp data not get updated Successfully In Get Call  and Status code is:\"+responseCode.code]=responseCode.code == 200;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"//APITEST-1002(Update[Patch] the Employee data and verify the same)"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "UpdateEmpDataUsingPUT",
+					"item": [
+						{
+							"name": "UpdateEmpDataUsingMultipleProp",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"// Convert the Json Object into JavaScript\r",
+											"var resBody = JSON.parse(responseBody);\r",
+											"\r",
+											"//Convert the Request Body into JavaScript\r",
+											"var reqBody = JSON.parse(request.data);\r",
+											"\r",
+											"//Verify the status code\r",
+											"if (responseCode.code == 200)//True//False\r",
+											"{\r",
+											"    //Set The Put method EMp data\r",
+											"    pm.environment.set(\"setThePutEmpData\", reqBody);\r",
+											"    tests[\"EMp data get updated successfully and status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"    tests[\"Verify the Updated Employee FirstName and FirstName is: \" + resBody.FirstName] = resBody.FirstName == reqBody.FirstName;\r",
+											"    tests[\"Verify the Updated Employee LastName and LastName is: \" + resBody.LastName] = resBody.LastName == reqBody.LastName;\r",
+											"\r",
+											"\r",
+											"}\r",
+											"else {\r",
+											"    tests[\"EMp data not get updated successfully and status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"FirstName\": \"deep\",\r\n    \"LastName\": \"Postman\"\r\n    \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VerifyTheUpdateEmpData Copy 2",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//Conver the Response Body into JavaScript\r",
+											"var resBody = JSON.parse(responseBody);\r",
+											"\r",
+											"if (responseCode.code == 200) {\r",
+											"    //Get the Updated Employee data\r",
+											"    var getThePutEmpData = pm.environment.get(\"setThePutEmpData\");\r",
+											"    console.log(getThePutEmpData);\r",
+											"    tests[\"Updated EMp data get verified In Get Call  and Status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"    tests[\"Verify the PUT method Emp FirstName\"] = resBody.FirstName == getThePutEmpData.FirstName;\r",
+											"    tests[\"Verify the PUT method  Emp LastName\"] = resBody.LastName == getThePutEmpData.LastName;\r",
+											"\r",
+											"\r",
+											"}\r",
+											"else {\r",
+											"    tests[\"EMp data not get updated Successfully In Get Call  and Status code is:\" + responseCode.code] = responseCode.code == 200;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"//APITEST-1003(Update[Put] the employee data and Verify the same)"
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "DeleteTheEmp",
+					"item": [
+						{
+							"name": "DeleteTheEmpData",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (responseCode.code == 200) {\r",
+											"\r",
+											"    tests[\"Employee data get deleted successfully and status code is:\" + responseCode] = responseCode.code == 200;\r",
+											"\r",
+											"}\r",
+											"else {\r",
+											"    tests[\"Employee data not get deleted successfully and status code is:\" + responseCode] = responseCode.code == 200;\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VerifyTheDeletedData",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"if (responseCode.code == 404) {\r",
+											"    tests[\"Employee Data get deleted successfully and status code is:\" + responseCode.code] = responseCode.code == 404;\r",
+											"}\r",
+											"else {\r",
+											"    tests[\"Employee Data not get deleted successfully and status code is:\" + responseCode.code] = responseCode.code == 404;\r",
+											"\r",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Employees",
+										"{{setTheEmployeeID}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Client Error(Negative Scenarios)",
+					"item": [
+						{
+							"name": "400 Bad Request",
+							"item": [
+								{
+									"name": "CreateEMployee(Syntaxerror)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"console.log(\"Pre-Request\");\r",
+													"\r",
+													"var randomNum = Math.floor(Math.random() * 1000);\r",
+													"pm.environment.set(\"setTheRandomNum\",randomNum);\r",
+													"var empFirstName = \"Mohan\" + randomNum;\r",
+													"\r",
+													"//Set the EMployee unique FirstName\r",
+													"pm.environment.set(\"setUniEmpFirstName\", empFirstName);\r",
+													"\r",
+													"var empEmailId = empFirstName + \"@gmail.com\";\r",
+													"//set the Employee unique EmailID\r",
+													"pm.environment.set(\"setUniEmpEmail\", empEmailId);\r",
+													"var mobNum = \"7887878\";\r",
+													"//Set the MobNum\r",
+													"pm.environment.set(\"setMobNum\",mobNum+randomNum);\r",
+													"\r",
+													"//Generate the Unique String Value\r",
+													"function randomString(length) {\r",
+													"    var result = '';\r",
+													"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgwxyzsdsdsdsdsdsdsdrrererer';\r",
+													"    var charactersLength = characters.length;\r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        result += characters.charAt(Math.floor(Math.random()*charactersLength));\r",
+													"    }\r",
+													"    return result;\r",
+													"}\r",
+													"\r",
+													"var generateRandomString = \"Jo\"+randomString(5);\r",
+													"console.log(generateRandomString);\r",
+													"\r",
+													"pm.environment.set(\"setRandomString\",generateRandomString);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "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",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "applications/json",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "",
+												"value": "{{firstName}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"{{setUniEmpFirstName}}\",\r\n    \"LastName\": \"{{$randomLastName}}\"\r\n    \"Prefix\": \"{{$randomNamePrefix}}\"\r\n    \"BirthSurName\": \"{{setRandomString}}\",\r\n    \"Email\": \"{{setUniEmpEmail}}\",\r\n    \"Smoker\": {{$randomBoolean}},\r\n    \"Smokedate\": null,\r\n    \"DateOfBirth\": \"1998-03-15\",\r\n    \"Type\": \"Client\",\r\n    \"Nationality\": \"UK\",\r\n    \"Address\": {\r\n        \"Street\": \"{{setRandomString}}\",\r\n        \"HouseNumber\": \"{{setTheRandomNum}}\",\r\n        \"PostalCode\": \"{{$randomInt}}\",\r\n        \"City\": \"{{$randomCity}}\",\r\n        \"Country\": \"IND\"\r\n    },\r\n    \"PhoneNumber\": {{setMobNum}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateEmp(SyntaxIssue)",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"ManishUpdate12345\",\r\n    \"LastName\": \"UpdatedLastName\"\r\n    \"PhoneNumber\": 999999999\r\n    \r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"{{setTheEmployeeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateEmpData(SyntaxIssue)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"Manish\",\r\n    \"LastName\": \"Postman\",\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees/6323727",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"6323727"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"if(responseCode.code == 400)",
+											"{",
+											"    tests[\"Syntax error that is 400 Bad request\"]= responseCode.code == 400;",
+											"}",
+											"else{",
+											" tests[\"Client error not displayed If user making the Syntax error\"]= responseCode.code == 400;",
+											"}"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "404 Not Found",
+							"item": [
+								{
+									"name": "CreateEMployee(ResourceIsInvalid)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"//Verify the 404 Not Found Status code\r",
+													"if(responseCode.code == 404)\r",
+													"{\r",
+													"\r",
+													"tests[\"Employee data is Invalid and it return the client error message i..e :\"+responseCode.code] = responseCode.code\r",
+													"tests[\"ABCDDHDHDH\"] = responseCode.code == 404;\r",
+													"}\r",
+													"else{\r",
+													"tests[\"Employee data is Invalid and it return the client error message i..e :\"+responseCode.code] = responseCode.code\r",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"console.log(\"Pre-Request\");\r",
+													"\r",
+													"var randomNum = Math.floor(Math.random() * 1000);\r",
+													"pm.environment.set(\"setTheRandomNum\",randomNum);\r",
+													"var empFirstName = \"Mohan\" + randomNum;\r",
+													"\r",
+													"//Set the EMployee unique FirstName\r",
+													"pm.environment.set(\"setUniEmpFirstName\", empFirstName);\r",
+													"\r",
+													"var empEmailId = empFirstName + \"@gmail.com\";\r",
+													"//set the Employee unique EmailID\r",
+													"pm.environment.set(\"setUniEmpEmail\", empEmailId);\r",
+													"var mobNum = \"7887878\";\r",
+													"//Set the MobNum\r",
+													"pm.environment.set(\"setMobNum\",mobNum+randomNum);\r",
+													"\r",
+													"//Generate the Unique String Value\r",
+													"function randomString(length) {\r",
+													"    var result = '';\r",
+													"    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefgwxyzsdsdsdsdsdsdsdrrererer';\r",
+													"    var charactersLength = characters.length;\r",
+													"    for (var i = 0; i < length; i++) {\r",
+													"        result += characters.charAt(Math.floor(Math.random()*charactersLength));\r",
+													"    }\r",
+													"    return result;\r",
+													"}\r",
+													"\r",
+													"var generateRandomString = \"Jo\"+randomString(5);\r",
+													"console.log(generateRandomString);\r",
+													"\r",
+													"pm.environment.set(\"setRandomString\",generateRandomString);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "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",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "applications/json",
+												"type": "text",
+												"disabled": true
+											},
+											{
+												"key": "",
+												"value": "{{firstName}}",
+												"type": "text",
+												"disabled": true
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"{{setUniEmpFirstName}}\",\r\n    \"LastName\": \"{{$randomLastName}}\",\r\n    \"Prefix\": \"{{$randomNamePrefix}}\",\r\n    \"BirthSurName\": \"{{setRandomString}}\",\r\n    \"Email\": \"{{setUniEmpEmail}}\",\r\n    \"Smoker\": {{$randomBoolean}},\r\n    \"Smokedate\": null,\r\n    \"DateOfBirth\": \"1998-03-15\",\r\n    \"Type\": \"Client\",\r\n    \"Nationality\": \"UK\",\r\n    \"Address\": {\r\n        \"Street\": \"{{setRandomString}}\",\r\n        \"HouseNumber\": \"{{setTheRandomNum}}\",\r\n        \"PostalCode\": \"{{$randomInt}}\",\r\n        \"City\": \"{{$randomCity}}\",\r\n        \"Country\": \"IND\"\r\n    },\r\n    \"PhoneNumber\": {{setMobNum}}\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employ",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employ"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetEmployeeUsingID(InvalidEmpID)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employees/98989",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"98989"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetAllEmpData(InvalidResource)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/vnd.api+json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employ",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employ"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "GetEmpDataUsingQueryParam(Invalid Resourse)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "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",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employ?FirstName={{setEmployeeFirstName}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employ"
+											],
+											"query": [
+												{
+													"key": "FirstName",
+													"value": "{{setEmployeeFirstName}}"
+												},
+												{
+													"key": "Email",
+													"value": "{{setEmployeeEmailId}}",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateEmp(InvalidEmpID)",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"ManishUpdate12345\",\r\n    \"LastName\": \"UpdatedLastName\",\r\n    \"PhoneNumber\": 999999999\r\n    \r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees/667778",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"667778"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateEmp(InvalidResource))",
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"ManishUpdate12345\",\r\n    \"LastName\": \"UpdatedLastName\",\r\n    \"PhoneNumber\": 999999999\r\n    \r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employe/{{setTheEmployeeID}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employe",
+												"{{setTheEmployeeID}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "UpdateEmpData(InvalidEmpID)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"FirstName\": \"Manish\",\r\n    \"LastName\": \"Postman\"\r\n    \r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "http://localhost:3000/Employees/3747374",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"3747374"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "DeleteTheEmp(InvalidID)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "http://localhost:3000/Employees/{{setTheEmployeeID}}",
+											"protocol": "http",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"Employees",
+												"{{setTheEmployeeID}}"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"//Verify the 404 Not Found Status code",
+											"if(responseCode.code == 404)",
+											"{",
+											"",
+											"tests[\"Employee data is Invalid and it return the client error message i..e :\"+responseCode.code] = responseCode.code == 404",
+											"}",
+											"else{",
+											"tests[\"Employee data is Invalid and it return the client error message i..e :\"+responseCode.code] = responseCode.code =404",
+											"}"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "401 UnAuthrorized",
+							"item": [
+								{
+									"name": "CreateTheUser(InvalidToken)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "9d7379b040fe82fd677f4cb3d8e03dc5828e2f8dd1fb80d7ad8",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n    \"name\": 2323,\r\n    \"email\": \"VijaySingh@gmail.com\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"Inactive\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://gorest.co.in/public/v1/users",
+											"protocol": "https",
+											"host": [
+												"gorest",
+												"co",
+												"in"
+											],
+											"path": [
+												"public",
+												"v1",
+												"users"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "CreateTheUser(BlankToken)",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n    \"name\": 2323,\r\n    \"email\": \"VijaySingh@gmail.com\",\r\n    \"gender\": \"male\",\r\n    \"status\": \"Inactive\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://gorest.co.in/public/v1/users",
+											"protocol": "https",
+											"host": [
+												"gorest",
+												"co",
+												"in"
+											],
+											"path": [
+												"public",
+												"v1",
+												"users"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"//Verify the 401 status Code",
+											"",
+											"var resBody = JSON.parse(responseBody);",
+											"",
+											"if(responseCode.code == 401)",
+											"{",
+											"",
+											"tests[\"Perform the action using the Invalid Token and it return the client error message: \"+responseCode.code] = responseCode.code == 401;",
+											"",
+											"//Verify the error message",
+											"tests[\"If Token is Inavlid it return the error message as: Authentication failed\"] = resBody.data.message == \"Authentication failed\";",
+											"",
+											"}",
+											"else{",
+											"tests[\"Perform the action using the Invalid Token and it return the client error message: \"+responseCode.code] = responseCode.code == 401;",
+											"}"
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "403 Forbidden",
+							"item": [
+								{
+									"name": "InvalidUsername",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"username\": \"admin123\",\r\n    \"password\": \"password\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "https://automationintesting.online/auth/login",
+											"protocol": "https",
+											"host": [
+												"automationintesting",
+												"online"
+											],
+											"path": [
+												"auth",
+												"login"
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											"if(responseCode.code == 403)",
+											"{",
+											"",
+											"tests[\"If users try to fetch the other users data then it return the : 403 forbidden\"] = responseCode.code == 403;",
+											"",
+											"}",
+											"else{",
+											"tests[\"If users try to fetch the other users data then it return the : 403 forbidden\"] = responseCode.code == 403;",
+											"}"
+										]
+									}
+								}
+							]
+						}
+					]
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"//APITest-1000(To create the employee data)",
+							"//APITest-1001(To Verify the Created data using the Get Method)",
+							"//APITEST-1002(Update[Patch] the Employee data and verify the same)",
+							"//APITEST-1003(Update[Put] the employee data and Verify the same)",
+							"//APITEST-1004(Delete the Emp Data)"
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Incomes",
+			"item": [
+				{
+					"name": "CreateIncomeAndVerify",
+					"item": [
+						{
+							"name": "CreateEmpIncome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"//parse the JSON object\r",
+											"var incomeResBody = JSON.parse(responseBody);\r",
+											"\r",
+											"//set the Owner\r",
+											"pm.environment.set(\"setIncomeOwner\",incomeResBody.Owner);\r",
+											"//Set the variable inside the Global\r",
+											"\r",
+											"pm.globals.set(\"setIncomeOwner\",incomeResBody.Owner);\r",
+											"pm.globals.unset(\"setIncomeOwner\");\r",
+											"\r",
+											"pm.environment.unset(\"setIncomeOwner\");\r",
+											"//Status Code\r",
+											"pm.test(\"Status code is 201 and the message is created\", function () {\r",
+											"    pm.response.to.have.status(201);\r",
+											"    pm.response.to.have.status(\"Created\");\r",
+											"});\r",
+											"//Verify the JSON value\r",
+											"pm.test(\"Verify the income Onwer\", function () {\r",
+											"\r",
+											"    pm.expect(incomeResBody.Owner).to.eql(\"client\");\r",
+											"});\r",
+											"pm.test(\"Verify the income StartDate\", function () {\r",
+											"\r",
+											"    pm.expect(incomeResBody.StartDate).to.eql(\"2007-08-27\");\r",
+											"});\r",
+											"// pm.environment.get(\"variable_key\");\r",
+											"// pm.environment.set(\"variable_key\", \"variable_value\");\r",
+											"// pm.globals.get(\"variable_key\");\r",
+											"// pm.globals.set(\"variable_key\", \"variable_value\");\r",
+											"// pm.collectionVariables.get(\"variable_key\");\r",
+											"// pm.collectionVariables.set(\"variable_key\", \"variable_value\");\r",
+											"// pm.variables.get(\"variable_key\");\r",
+											"// pm.environment.unset(\"variable_key\");\r",
+											"// pm.globals.unset(\"variable_key\");\r",
+											"\r",
+											"//Verify the Header\r",
+											"pm.test(\"Content-Type is present\", function () {\r",
+											"    pm.response.to.have.header(\"Content-Type\");\r",
+											"});\r",
+											"//Verify the Header and value\r",
+											"pm.test(\"Content-Type is present and value is verified\", function () {\r",
+											"    pm.response.to.be.header(\"Content-Type\", \"application/json; charset=utf-8\");\r",
+											"});\r",
+											"\r",
+											"//Verify the status Code Message\r",
+											"pm.test(\"Status Code message is verified\", function () {\r",
+											"    pm.response.to.have.status(\"Created\");\r",
+											"});\r",
+											"\r",
+											"//Verify the response time \r",
+											"pm.test(\"Response time is less than 3000ms\", function () {\r",
+											"    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"//set the local variable\r",
+											"pm.variables.set(\"setDOB\",\"2007-08-27\");"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n    {\r\n      \"Owner\": \"{{owner}}\",\r\n      \"PartTimeHours\": 32,\r\n      \"StartDate\": \"{{setDOB}}\",\r\n      \"Type\": \"Permanent\",\r\n      \"YearlyIncomes\": [\r\n        {\r\n          \"ExtraMonth\": 0,\r\n          \"HolidayAllowanceValue\": 0,\r\n          \"OverTimeValue\": 0,\r\n          \"TravelAllowance\": 0,\r\n          \"Value\": {{salary}},\r\n          \"Year\": 2018\r\n        }\r\n      ],\r\n      \"CompanyCar\": false\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:3000/Incomes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Incomes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VerifyTheIncome",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/Incomes",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Incomes"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetTheIncomeUsingID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:3000/Incomes/3",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"Incomes",
+										"3"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "owner",
+			"value": "client"
+		},
+		{
+			"key": "salary",
+			"value": "10000"
+		}
+	]
+}
